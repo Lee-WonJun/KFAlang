@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35312.102
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "kfalang", "kfalang\kfalang.fsproj", "{4AB41E11-3853-4DF8-BCAD-636FF3E7E3B1}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "kfalangTest", "kfalangTest\kfalangTest.fsproj", "{6A9EEEB4-ABD3-4133-9A20-759BEA6F081E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4AB41E11-3853-4DF8-BCAD-636FF3E7E3B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4AB41E11-3853-4DF8-BCAD-636FF3E7E3B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4AB41E11-3853-4DF8-BCAD-636FF3E7E3B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4AB41E11-3853-4DF8-BCAD-636FF3E7E3B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A9EEEB4-ABD3-4133-9A20-759BEA6F081E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A9EEEB4-ABD3-4133-9A20-759BEA6F081E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A9EEEB4-ABD3-4133-9A20-759BEA6F081E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A9EEEB4-ABD3-4133-9A20-759BEA6F081E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1829156E-2911-46AD-ABCD-3CD06E57152C}
+	EndGlobalSection
+EndGlobal
