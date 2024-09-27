@@ -9,9 +9,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="Example\return.kfa" />
     <None Include="Example\triangle.kfa" />
     <None Include="Example\helloworld.kfa" />
-    <Compile Include="Example\HelloWorld.fs" />
     <Compile Include="TestsInterpreter.fs" />
     <Compile Include="TestsParser.fs" />
     <Compile Include="Program.fs" />

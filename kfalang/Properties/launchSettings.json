@@ -1,8 +1,7 @@
 {
   "profiles": {
     "kfalang": {
-      "commandName": "Project",
-      "commandLineArgs": "\"F:\\Project\\own\\kfalang\\kfalangTest\\Example\\triangle.kfa\""
+      "commandName": "Project"
     }
   }
 }
