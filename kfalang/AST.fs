@@ -8,10 +8,9 @@ type Expr =
     | BinaryOp of Expr * Ops * Expr
 
 type Statement =
-    | VariableDeclaration of string * Expr
     | VariableAssignment of string * Expr
-    | IfStatement of string * Block
-    | Goto of int
+    | Sleep of int
+    | WhileStatement of string * Block
     | Output of string
     | Return of string
 and Block = Statement list

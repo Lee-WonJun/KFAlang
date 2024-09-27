@@ -27,7 +27,7 @@ let varDeclare =
         let! val1 = pnumber .>> pstring "점 만점에" .>> ws
         let! val2 = pnumber .>> pstring "점 정도는 된다고 대답하고 싶다" .>> ws
         let value = int (float val2 / float val1)
-        return VariableDeclaration(var, Number(value))
+        return VariableAssignment(var, Number(value))
     }
 
 
@@ -55,14 +55,14 @@ let varAssign =
     }
 
 // GOTO 문 파서
-let goto =
+let sleep =
     parse {
         let! _ = pstring "제가 통화 안 하고 동의를 받지 않았다는 것에는 절대 동의하지 못하겠습니다" .>> ws
         let! _ = pstring "전 전력강화위원과는" .>> ws
         let! line1 = pnumber .>> pstring "분" .>> ws
         let! line2 = pnumber .>> pstring "초 통화했습니다" .>> ws
         let line = line1 * 60 + line2
-        return Goto(line)
+        return Sleep(line)
     }
 
 // 출력 파서
@@ -82,20 +82,20 @@ let returnValue =
     }
 
 
-let ifBlock =
+let whileBlock =
     parse {
         let! _ = pstring "골 먹고 전부 다 손 들고. 이게" .>> ws
         let! var = identifierSentenceFactory "이야??"  |>> trim 
-        let! block = many (statement .>> optional newline)
+        let! block = many (ws >>. statement .>> optional newline)
         let! _ = pstring "전부 다 넘어지면 아! 아! 내가 분명히 얘기했지!" .>> newline
-        return IfStatement(var, block)
+        return WhileStatement(var, block)
     }
 
 do statementRef := choice [
-        attempt ifBlock
+        attempt whileBlock
         attempt varDeclare
         attempt varAssign
-        attempt goto
+        attempt sleep
         attempt output
         attempt returnValue
         ]
