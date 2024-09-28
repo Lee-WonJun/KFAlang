@@ -32,6 +32,12 @@ let ``Parsing a variable assignment should return the correct AST`` () =
     assertParseSuccess varAssign input expected
 
 [<Fact>]
+let ``Parsing a variable assignment should return the correct AST 2`` () =
+    let input = "새로운 축구대표팀 감독로 홍명보"
+    let expected = VariableAssignment("감독", Variable("홍명보"))
+    assertParseSuccess varAssign input expected
+
+[<Fact>]
 let ``Parsing a variable assignment with an expression should return the correct AST`` () =
     let input = "새로운 축구대표팀 감독으로 머니볼 뭐.. 업적 그.. 무언가 저.. 팀 네.. 홍명보"
     
@@ -56,8 +62,20 @@ let ``parse Output statement`` () =
     assertParseSuccess output input expected
 
 [<Fact>]
+let ``parse Output statement 2`` () =
+    let input = "의원님께서 혹시 머니볼라는 영화 보신 적이.."
+    let expected = Output("머니볼")
+    assertParseSuccess output input expected
+
+[<Fact>]
 let ``parse Return statement`` () =
     let input = "결과적으로는 제 안에 있는 무언가가 나오기 시작했습니다"
+    let expected = Return("무언가")
+    assertParseSuccess returnValue input expected
+
+[<Fact>]
+let ``parse Return statement 2`` () =
+    let input = "결과적으로는 제 안에 있는 무언가이 나오기 시작했습니다"
     let expected = Return("무언가")
     assertParseSuccess returnValue input expected
 

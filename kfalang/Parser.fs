@@ -12,8 +12,9 @@ let ws = spaces
 let pnumber = pint32 .>> ws
 
 // 문장식 ID 파서 Helper
-let identifierSentenceFactory endSentence =
-    manyCharsTill anyChar (pstring endSentence) .>> ws
+let identifierSentenceFactory endSentencese =
+    let choiceString = choice (List.map pstring endSentencese)
+    manyCharsTill anyChar choiceString .>> ws
 
 // 독립적 Id 파서
 let identifierIndependent =
@@ -23,7 +24,7 @@ let identifierIndependent =
 let varDeclare =
     parse {
         let! _ = pstring "누군가 내 임기 도중 이뤄냈던" .>> ws
-        let! var = identifierSentenceFactory "에 대해 점수를 매겨보라고 한다면"  |>> trim 
+        let! var = identifierSentenceFactory ["에 대해 점수를 매겨보라고 한다면"] |>> trim 
         let! val1 = pnumber .>> pstring "점 만점에" .>> ws
         let! val2 = pnumber .>> pstring "점 정도는 된다고 대답하고 싶다" .>> ws
         let value = int (float val2 / float val1)
@@ -49,7 +50,7 @@ let exprParser s =
 let varAssign =
     parse {
         let! _ = pstring "새로운 축구대표팀" .>> ws
-        let! var = identifierSentenceFactory "으로"  |>> trim 
+        let! var = identifierSentenceFactory ["으로"; "로"]  |>> trim 
         let! expr = exprParser .>> ws
         return VariableAssignment(var, expr)
     }
@@ -69,7 +70,7 @@ let sleep =
 let output =
     parse {
         let! _ = pstring "의원님께서 혹시" .>> ws
-        let! var = identifierSentenceFactory "이라는 영화 보신 적이.."  |>> trim 
+        let! var = identifierSentenceFactory ["이라는 영화 보신 적이.."; "라는 영화 보신 적이.."]  |>> trim 
         return Output(var)
     }
 
@@ -77,7 +78,7 @@ let output =
 let returnValue =
     parse {
         let! _ = pstring "결과적으로는 제 안에 있는" .>> ws
-        let! var = identifierSentenceFactory "가 나오기 시작했습니다"  |>> trim 
+        let! var = identifierSentenceFactory ["가 나오기 시작했습니다"; "이 나오기 시작했습니다"]  |>> trim 
         return Return(var)
     }
 
@@ -85,7 +86,7 @@ let returnValue =
 let whileBlock =
     parse {
         let! _ = pstring "골 먹고 전부 다 손 들고. 이게" .>> ws
-        let! var = identifierSentenceFactory "이야??"  |>> trim 
+        let! var = identifierSentenceFactory ["이야??"]  |>> trim 
         let! block = many (ws >>. statement .>> optional newline)
         let! _ = pstring "전부 다 넘어지면 아! 아! 내가 분명히 얘기했지!" .>> newline
         return WhileStatement(var, block)
