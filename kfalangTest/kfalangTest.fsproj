@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <None Include="Example\return.kfa" />
+    <None Include="Example\if.kfa" />
     <None Include="Example\triangle.kfa" />
     <None Include="Example\helloworld.kfa" />
     <Compile Include="TestsInterpreter.fs" />

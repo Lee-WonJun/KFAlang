@@ -9,6 +9,8 @@ type SoftwareState = {
     Variables: Dictionary<string, int>
 }
 
+type Signal = NormalSign | BreakSign
+
 let interpret (program: Program) =
     let state = {
         Variables = Dictionary()
@@ -16,7 +18,7 @@ let interpret (program: Program) =
 
     let rec exec program = 
         match program with
-        | [] -> ()
+        | [] -> NormalSign 
         | VariableAssignment(var, expr) :: rest ->
             let value = evalExpr expr
             if state.Variables.ContainsKey(var) then
@@ -26,8 +28,11 @@ let interpret (program: Program) =
             exec rest
 
         | WhileStatement(var, block) :: rest ->
-            while state.Variables.[var] <> 0 do
-                exec block 
+            let mutable inside_continue = true
+            while inside_continue && state.Variables.[var] <> 0 do
+                exec block |> function 
+                | Signal.BreakSign -> inside_continue <- false
+                | _ -> ()
             exec rest
 
         | Sleep(seconds) :: rest ->
@@ -41,6 +46,9 @@ let interpret (program: Program) =
 
         | Return(var) :: _ -> // 프로그램 완전 종료
              System.Environment.Exit(state.Variables.[var])
+             Signal.BreakSign
+        | Break :: _ -> // 프로그램 완전 종료
+            Signal.BreakSign
 
 
     and evalExpr expr =

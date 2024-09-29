@@ -93,6 +93,41 @@ let ``Parse WhileBlock statement`` () =
 
     assertParseSuccess whileBlock input expected
 
+
+[<Fact>]
+let ``Parse Break statement`` () =
+    let input = "계속 정치적으로 압박을 받으면 FIFA의 제재를 받을 수 있다, 최악의 경우엔 월드컵 본선에 못 나갈 수 있다"
+    let expected = Break
+    assertParseSuccess breakSign input expected
+
+[<Fact>]
+let ``Parse Break statement 2`` () =
+    let input = "제가 사퇴하겠습니다"
+    let expected = Break
+    assertParseSuccess breakSign input expected
+
+[<Fact>]
+let ``Fail to parse Break statement if it isn't inside WhileBlock`` () =
+    let input = "계속 정치적으로 압박을 받으면 FIFA의 제재를 받을 수 있다, 최악의 경우엔 월드컵 본선에 못 나갈 수 있다."
+    
+    match run program input with
+    | Success(result, _, _) ->
+        Assert.Fail()
+    | Failure(errorMsg, _, _) ->
+        Assert.True(true)
+
+[<Fact>]
+let ``Parse WhileBlock statement with Break statement`` () =
+    let input = """골 먹고 전부 다 손 들고. 이게 팀이야??
+ 제가 사퇴하겠습니다
+전부 다 넘어지면 아! 아! 내가 분명히 얘기했지!
+"""
+    let expected = WhileStatement("팀", [
+        Break
+    ])
+
+    assertParseSuccess whileBlock input expected
+
 [<Fact>]
 let ``Parse WhileBlock statement with multiple statements`` () =
     let input = """골 먹고 전부 다 손 들고. 이게 팀이야??
@@ -144,6 +179,7 @@ let ``Parse Full Program`` () =
     골 먹고 전부 다 손 들고. 이게 감독이야??
         새로운 축구대표팀 감독으로 홍명보
     전부 다 넘어지면 아! 아! 내가 분명히 얘기했지!
+    제가 사퇴하겠습니다
 전부 다 넘어지면 아! 아! 내가 분명히 얘기했지!
 """
 

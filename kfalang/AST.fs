@@ -12,5 +12,6 @@ type Statement =
     | Sleep of int
     | WhileStatement of string * Block
     | Output of string
+    | Break
     | Return of string
 and Block = Statement list

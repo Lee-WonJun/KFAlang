@@ -20,7 +20,6 @@ let identifierSentenceFactory endSentencese =
 let identifierIndependent =
     many1Satisfy (fun c -> not (Char.IsWhiteSpace c))
 
-// 변수 선언 파서
 let varDeclare =
     parse {
         let! _ = pstring "누군가 내 임기 도중 이뤄냈던" .>> ws
@@ -32,7 +31,6 @@ let varDeclare =
     }
 
 
-// 연산자 파서
 let op =
     choice [
         pstring "뭐.." >>% Ops.Add
@@ -41,12 +39,10 @@ let op =
         pstring "네.." >>% Ops.Mul
     ] .>> ws
 
-// 표현식 파서
 let exprParser s =
     let term = (identifierIndependent |>> Variable .>> ws) <|> (pnumber |>> Number .>> ws)
     chainl1 term (op |>> (fun o x y -> BinaryOp(x, o, y))) s
 
-// 변수 할당 파서
 let varAssign =
     parse {
         let! _ = pstring "새로운 축구대표팀" .>> ws
@@ -55,7 +51,6 @@ let varAssign =
         return VariableAssignment(var, expr)
     }
 
-// GOTO 문 파서
 let sleep =
     parse {
         let! _ = pstring "제가 통화 안 하고 동의를 받지 않았다는 것에는 절대 동의하지 못하겠습니다" .>> ws
@@ -66,7 +61,6 @@ let sleep =
         return Sleep(line)
     }
 
-// 출력 파서
 let output =
     parse {
         let! _ = pstring "의원님께서 혹시" .>> ws
@@ -74,7 +68,6 @@ let output =
         return Output(var)
     }
 
-// 리턴 파서
 let returnValue =
     parse {
         let! _ = pstring "결과적으로는 제 안에 있는" .>> ws
@@ -83,12 +76,21 @@ let returnValue =
     }
 
 
+let breakSign = 
+    choice [
+        pstring "계속 정치적으로 압박을 받으면 FIFA의 제재를 받을 수 있다, 최악의 경우엔 월드컵 본선에 못 나갈 수 있다"
+        pstring "제가 사퇴하겠습니다"
+    ] .>> ws >>% Break
+
 let whileBlock =
     parse {
         let! _ = pstring "골 먹고 전부 다 손 들고. 이게" .>> ws
         let! var = identifierSentenceFactory ["이야??" ; "야??"]  |>> trim 
-        let! block = many (ws >>. statement .>> optional newline)
-        let! _ = pstring "전부 다 넘어지면 아! 아! 내가 분명히 얘기했지!" .>> newline
+
+        let statementWithBreakSign = attempt breakSign <|> statement
+
+        let! block = many (ws >>. statementWithBreakSign .>> optional newline)
+        let! _ = pstring "전부 다 넘어지면 아! 아! 내가 분명히 얘기했지!" .>> ws
         return WhileStatement(var, block)
     }
 
