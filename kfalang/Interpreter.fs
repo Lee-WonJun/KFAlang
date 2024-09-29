@@ -64,6 +64,6 @@ let interpret (program: Program) =
             | Mul -> x' * y'
             | Div -> x' / y'
 
-    exec program
+    exec program |> ignore
     state
     
