@@ -86,7 +86,7 @@ let returnValue =
 let whileBlock =
     parse {
         let! _ = pstring "골 먹고 전부 다 손 들고. 이게" .>> ws
-        let! var = identifierSentenceFactory ["이야??"]  |>> trim 
+        let! var = identifierSentenceFactory ["이야??" ; "야??"]  |>> trim 
         let! block = many (ws >>. statement .>> optional newline)
         let! _ = pstring "전부 다 넘어지면 아! 아! 내가 분명히 얘기했지!" .>> newline
         return WhileStatement(var, block)
