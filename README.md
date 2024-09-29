@@ -297,3 +297,5 @@ HELLO WORLD
 # 참고자료
 - [축구협회 청문회 '핵심 9분' 다시 보기](https://www.youtube.com/watch?v=dz8J8XiVE6Q)
 - [FParsec](https://www.quanttec.com/fparsec)
+- [개발노트](https://see-ro-e.tistory.com/375)
+
