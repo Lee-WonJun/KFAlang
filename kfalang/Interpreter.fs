@@ -47,7 +47,7 @@ let interpret (program: Program) =
         | Return(var) :: _ -> // 프로그램 완전 종료
              System.Environment.Exit(state.Variables.[var])
              Signal.BreakSign
-        | Break :: _ -> // 프로그램 완전 종료
+        | Break :: _ -> // While문 종료
             Signal.BreakSign
 
 
